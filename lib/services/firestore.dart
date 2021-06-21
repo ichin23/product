@@ -7,20 +7,26 @@ FirebaseFirestore firestore = FirebaseFirestore.instance;
 CollectionReference produtos = firestore.collection('produtos');
 
 Future<void> addProduct(Produto product) async {
+  print("Chegou");
   produtos
       .add({
         'categorias': product.categorias,
         'nome': product.name,
         'price': product.price,
         'description': product.description,
-        'cores': product.cores,
+        'peso': product.peso,
+        'dimensoes': product.dimensoes,
+        'estoque': product.estoque,
+        'cores':
+            product.cores!.map((key, value) => MapEntry(key, value.toString())),
         'genero': product.genero,
         'marca': product.marca,
-        'vendedorID': FirebaseAuth.instance.currentUser!.uid,
+        'vendedorID': "FirebaseAuth.instance.currentUser!.uid",
         'imageURL': product.imageURL,
       })
       .then((value) => print("Produto adicionado"))
       .catchError((error) {
+        print(error);
         return error;
       });
 }
@@ -43,7 +49,10 @@ Future<List<Produto>?> getProdutos() async {
         vendedorID: data['vendedorID'],
         imageURL: data['imageURL'].map((e) => e as String).toList(),
         genero: data['genero'],
-        marca: data['marca']));
+        marca: data['marca'],
+        dimensoes: data['dimensoes'].map((e) => e as double).toList(),
+        estoque: data['estoque'],
+        peso: data['peso']));
   }
   print(produto);
   return produto;

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Produto {
   final String name;
   final double price;
@@ -7,10 +9,15 @@ class Produto {
   final List<dynamic> imageURL;
   final String genero;
   final String? marca;
-  final List<dynamic>? cores;
+  final double peso;
+  final List<dynamic> dimensoes;
+  final int estoque;
+  final Map<String, Color>? cores;
   final List<dynamic> categorias;
 
   Produto({
+    required this.peso,
+    required this.dimensoes,
     required this.genero,
     required this.marca,
     required this.name,
@@ -18,6 +25,7 @@ class Produto {
     required this.description,
     this.productID,
     this.cores,
+    required this.estoque,
     required this.categorias,
     required this.vendedorID,
     this.imageURL = const [],
@@ -30,6 +38,9 @@ Produto getProduto(
     required vendedorID,
     productID,
     required genero,
+    required int estoque,
+    required List<double> dimensoes,
+    required double peso,
     marca,
     required List<dynamic> categorias,
     required double price,
@@ -38,10 +49,13 @@ Produto getProduto(
       categorias: categorias,
       name: nome,
       price: price,
+      estoque: estoque,
       description: description,
       productID: productID,
       vendedorID: vendedorID,
       imageURL: imageURL,
       genero: genero,
-      marca: marca);
+      marca: marca,
+      dimensoes: dimensoes,
+      peso: peso);
 }

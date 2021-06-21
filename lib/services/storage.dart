@@ -10,7 +10,7 @@ FirebaseStorage storage = FirebaseStorage.instance;
 
 Future<String?> uploadFile(File _image) async {
   String name = _image.path.split("/").last;
-  String user = FirebaseAuth.instance.currentUser!.uid;
+  String user = '1234';
   Reference storageReference =
       FirebaseStorage.instance.ref().child('images/$user/$name');
   UploadTask uploadTask = storageReference.putFile(_image);
