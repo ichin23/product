@@ -271,33 +271,38 @@ class _HomePageState extends State<HomePage> {
                                     itemBuilder: (ctx, i) => ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(15),
-                                          child: GridTile(
-                                              header: Container(
-                                                padding: EdgeInsets.only(
-                                                    left: 5, top: 5),
-                                                child: Text(
-                                                  "R\$${products[i].price.toString()}",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              print(products[i].productID);
+                                            },
+                                            child: GridTile(
+                                                header: Container(
+                                                  padding: EdgeInsets.only(
+                                                      left: 5, top: 5),
+                                                  child: Text(
+                                                    "R\$${products[i].price.toString()}",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 ),
-                                              ),
-                                              child: Image.network(
-                                                  products[i].imageURL[0],
-                                                  fit: BoxFit.cover),
-                                              footer: GridTileBar(
-                                                backgroundColor: Colors.black,
-                                                title: Text(products[i]
-                                                    .name
-                                                    .toString()),
-                                                leading: IconButton(
-                                                  icon: Icon(Icons.edit),
-                                                  onPressed: () =>
-                                                      Navigator.pushNamed(
-                                                          context, '/form',
-                                                          arguments:
-                                                              products[i]),
-                                                ),
-                                              )),
+                                                child: Image.network(
+                                                    products[i].imageURL[0],
+                                                    fit: BoxFit.cover),
+                                                footer: GridTileBar(
+                                                  backgroundColor: Colors.black,
+                                                  title: Text(products[i]
+                                                      .name
+                                                      .toString()),
+                                                  leading: IconButton(
+                                                    icon: Icon(Icons.edit),
+                                                    onPressed: () =>
+                                                        Navigator.pushNamed(
+                                                            context, '/form',
+                                                            arguments:
+                                                                products[i]),
+                                                  ),
+                                                )),
+                                          ),
                                         )),
                               ),
                             ),
