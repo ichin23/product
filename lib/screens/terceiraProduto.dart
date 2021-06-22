@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:product/screens/exitEnterAnimation.dart';
+
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:provider/provider.dart';
 
 import 'components/customField.dart';
-import 'quartaProduto.dart';
 
 class TerceiraProduto extends StatefulWidget {
   // Map<String, dynamic> produtoSendoCadastrado = {};
@@ -78,7 +77,6 @@ class _TerceiraProdutoState extends State<TerceiraProduto> {
                         ),
                         CustomField(
                           textType: TextInputType.numberWithOptions(),
-                          help: false,
                           controller: peso,
                           maxLines: 1,
                           validator: (value) {
@@ -114,7 +112,6 @@ class _TerceiraProdutoState extends State<TerceiraProduto> {
                                 child: CustomField(
                                   textType: TextInputType.numberWithOptions(),
                                   maxLines: 1,
-                                  help: false,
                                   controller: dimensao1,
                                   validator: (value) {
                                     if (value == null) {
@@ -139,7 +136,6 @@ class _TerceiraProdutoState extends State<TerceiraProduto> {
                                 child: CustomField(
                                   textType: TextInputType.numberWithOptions(),
                                   maxLines: 1,
-                                  help: false,
                                   controller: dimensao2,
                                   validator: (value) {
                                     if (value == null) {
@@ -169,7 +165,6 @@ class _TerceiraProdutoState extends State<TerceiraProduto> {
                             height: 10 * 24,
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: CustomField(
-                              help: false,
                               controller: descricao,
                               minLines: 2,
                               maxLines: null,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:product/services/produto.dart';
-import 'package:provider/provider.dart';
 
 class ProdutoCadastro extends ChangeNotifier {
   int indexCadastro = 0;
@@ -10,10 +9,6 @@ class ProdutoCadastro extends ChangeNotifier {
   void changeIndex(int newIndex) {
     indexCadastro = newIndex;
     notifyListeners();
-  }
-
-  void clean() {
-    cadastrando = null;
   }
 
   void get(

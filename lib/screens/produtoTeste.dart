@@ -1,8 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:product/screens/preco.dart';
 import 'package:product/screens/primeiraProduto.dart';
 import 'package:product/screens/quartaProduto.dart';
+import 'package:product/screens/review.dart';
 import 'package:product/screens/segundaProduto.dart';
 import 'package:product/screens/terceiraProduto.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
@@ -22,16 +22,22 @@ class _ProdutoPageState extends State<ProdutoPage> {
     SegundaProduto(),
     TerceiraProduto(),
     PrecoPage(),
-    QuartaProduto()
+    QuartaProduto(),
+    ReviewPage()
   ];
   @override
   Widget build(BuildContext context) {
     return Consumer<ProdutoCadastro>(
       builder: (context, produtoProvider, _) => Scaffold(
+          backgroundColor: (produtoProvider.indexCadastro == 5)
+                    ?Color(0xFFF2F2F2):Color(0xffF27127),
           appBar: AppBar(
             toolbarHeight: 120,
             backgroundColor: const Color(0XFF0D0D0D),
-            title: AutoSizeText('Anunciar Produto',
+            title: AutoSizeText(
+                (produtoProvider.indexCadastro == 5)
+                    ? 'Revisar Produto'
+                    : 'Anunciar Produto',
                 maxLines: 1,
                 style: TextStyle(
                   foreground: Paint()
@@ -49,7 +55,12 @@ class _ProdutoPageState extends State<ProdutoPage> {
             centerTitle: true,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    bottomRight: const Radius.circular(70.0))),
+                    bottomLeft: (produtoProvider.indexCadastro == 5)
+                        ? Radius.circular(70)
+                        : Radius.circular(0),
+                    bottomRight: (produtoProvider.indexCadastro == 5)
+                        ? Radius.circular(0)
+                        : Radius.circular(70))),
           ),
           body: Container(
               child: (produtoProvider.produtoCadastrando == null)

@@ -1,28 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'produto.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 CollectionReference produtos = firestore.collection('produtos');
 
-Future<void> addProduct(Produto product) async {
+Future<void> addProduct(Map product) async {
   print("Chegou");
   produtos
       .add({
-        'categorias': product.categorias,
-        'nome': product.name,
-        'price': product.price,
-        'description': product.description,
-        'peso': product.peso,
-        'dimensoes': product.dimensoes,
-        'estoque': product.estoque,
-        'cores':
-            product.cores!.map((key, value) => MapEntry(key, value.toString())),
-        'genero': product.genero,
-        'marca': product.marca,
+        'categorias': product['categorias'],
+        'nome': product['nome'],
+        'price': product['price'],
+        'description': product['descricao'],
+        'peso': product['peso'],
+        'dimensoes': product['dimensoes'],
+        'estoque': product['estoque'],
+        'cores': product['cores']!
+            .map((key, value) => MapEntry(key, value.toString())),
+        'genero': product['genero'],
+        'marca': product['marca'],
         'vendedorID': "FirebaseAuth.instance.currentUser!.uid",
-        'imageURL': product.imageURL,
+        'imageURL': product['imageURL'],
       })
       .then((value) => print("Produto adicionado"))
       .catchError((error) {

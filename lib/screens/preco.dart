@@ -62,7 +62,7 @@ class _PrecoPageState extends State<PrecoPage> {
               child: CustomField(
                 prefixLabel: "R\$",
                 label: ' Price ',
-                help: false,
+                
                 controller: price,
                 maxLines: 1,
                 textType: TextInputType.number,
@@ -77,7 +77,7 @@ class _PrecoPageState extends State<PrecoPage> {
               child: CustomField(
                 label: ' Estoque ',
                 sufixLabel: 'unidades',
-                help: false,
+                
                 controller: estoque,
                 maxLines: 1,
                 textType: TextInputType.number,

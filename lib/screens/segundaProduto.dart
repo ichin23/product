@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:product/screens/components/customField.dart';
-import 'package:product/screens/exitEnterAnimation.dart';
-import 'package:product/screens/terceiraProduto.dart';
+
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +108,6 @@ class _SegundaProdutoState extends State<SegundaProduto> {
                   margin: EdgeInsets.symmetric(horizontal: 40),
                   child: CustomField(
                     maxLines: 1,
-                    help: false,
                     controller: nome,
                     validator: (value) {
                       if (value == null) {
@@ -131,8 +129,7 @@ class _SegundaProdutoState extends State<SegundaProduto> {
                 SizedBox(height: 5),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 40),
-                  child:
-                      CustomField(maxLines: 1, help: false, controller: marca),
+                  child: CustomField(maxLines: 1, controller: marca),
                 ),
               ]),
               SizedBox(height: 15),
@@ -148,7 +145,6 @@ class _SegundaProdutoState extends State<SegundaProduto> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 40),
                   child: CustomField(
-                    help: false,
                     controller: genero,
                     maxLines: 1,
                     validator: (value) {

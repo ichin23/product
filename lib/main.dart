@@ -7,6 +7,7 @@ import 'package:product/screens/primeiraProduto.dart';
 import 'package:product/screens/produtoTeste.dart';
 
 import 'package:product/screens/review.dart';
+import 'package:product/screens/slider.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:product/services/firestore.dart';
 import 'package:product/services/produto.dart';
@@ -17,15 +18,6 @@ void main() async {
   await Firebase.initializeApp();
   Provider.debugCheckInvalidValueType = null;
 
-  final Shader linearGradient = LinearGradient(
-    colors: <Color>[
-      Color(0xffBE2A2C),
-      Color(0xffDD5429),
-      Color(0xffF27127),
-      Color(0xffE76228),
-      Color(0xffBE2A2C)
-    ],
-  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
   runApp(
     ChangeNotifierProvider(
       create: (_) => ProdutoCadastro(),
@@ -77,7 +69,7 @@ class _MyAppState extends State<MyApp> {
             child: TextButton(
                 child: Text("ir", style: TextStyle(fontSize: 40)),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/review');
+                  Navigator.of(context).pushNamed('/produtoTeste');
                 })),
       ),
     ),
@@ -433,3 +425,14 @@ class TelaFoto extends StatelessWidget {
     );
   }
 }
+
+
+  // final Shader linearGradient = LinearGradient(
+  //   colors: <Color>[
+  //     Color(0xffBE2A2C),
+  //     Color(0xffDD5429),
+  //     Color(0xffF27127),
+  //     Color(0xffE76228),
+  //     Color(0xffBE2A2C)
+  //   ],
+  // ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));

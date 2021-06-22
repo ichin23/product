@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:product/screens/segundaProduto.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:provider/provider.dart';
-
 import 'components/customField.dart';
-import 'exitEnterAnimation.dart';
 
 class EditPage extends StatefulWidget {
   EditPage({Key? key}) : super(key: key);
@@ -175,7 +171,6 @@ class _EditPageState extends State<EditPage> {
                         child: CustomField(
                           label: "Categoria",
                           maxLines: 1,
-                          help: false,
                           controller: categoria1,
                           validator: (value) {
                             if (value == null) {
@@ -190,10 +185,9 @@ class _EditPageState extends State<EditPage> {
                         ),
                       ),
                       Expanded(
-                        child: FlatButton(
+                        child: IconButton(
                           onPressed: () {},
-                          color: Color(0XFFF27127),
-                          child: Icon(
+                          icon: Icon(
                             Icons.info_outline,
                           ),
                         ),
@@ -209,7 +203,6 @@ class _EditPageState extends State<EditPage> {
                           width: (MediaQuery.of(context).size.width - 100) / 2,
                           child: CustomField(
                             maxLines: 1,
-                            help: false,
                             label: "Categoria 2",
                             controller: categoria2,
                             validator: (value) {
@@ -224,7 +217,6 @@ class _EditPageState extends State<EditPage> {
                             child: CustomField(
                               controller: categoria3,
                               label: "Categoria 3",
-                              help: true,
                               maxLines: 1,
                               validator: (value) {
                                 if (value == null) {
@@ -243,7 +235,6 @@ class _EditPageState extends State<EditPage> {
                       child: CustomField(
                         controller: categoria4,
                         label: "Categoria 4",
-                        help: false,
                         maxLines: 1,
                         validator: (value) {
                           if (value == null) {
@@ -257,7 +248,6 @@ class _EditPageState extends State<EditPage> {
                         child: CustomField(
                           controller: categoria5,
                           label: "Categoria 5",
-                          help: false,
                           maxLines: 1,
                           validator: (value) {
                             if (value == null) {
@@ -307,6 +297,9 @@ class _EditPageState extends State<EditPage> {
                         borderRadius: BorderRadius.circular(30)),
                     child: Text("Avançar",
                         style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: "Arial",
                           foreground: Paint()
                             ..shader = LinearGradient(
                               colors: <Color>[
@@ -318,7 +311,7 @@ class _EditPageState extends State<EditPage> {
                               ],
                             ).createShader(
                                 Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                          fontSize: 24,
+                          fontSize: 30,
                         )),
                   ),
                 ),

@@ -45,27 +45,6 @@ class _QuartaProdutoState extends State<QuartaProduto> {
   }
 
   List<String> urls = [];
-  // Future enviaFotos() async {
-  //   for (var foto in varios) {
-  //     String? url = await uploadFile(foto);
-  //     if (url != null) {
-  //       urls.add(url);
-  //     }
-  //   }
-  //   print(urls);
-  //   addProduct(Produto(
-  //     categorias: widget.produtoSendoCadastrado['categorias'],
-  //     name: widget.produtoSendoCadastrado['nome'],
-  //     marca: widget.produtoSendoCadastrado['marca'],
-  //     genero: widget.produtoSendoCadastrado['genero'],
-  //     cores: widget.produtoSendoCadastrado['cores'],
-  //     description: widget.produtoSendoCadastrado['descricao'],
-  //     price: 22,
-  //     imageURL: urls,
-  //     vendedorID: FirebaseAuth.instance.currentUser!.uid,
-  //   ));
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -85,31 +64,6 @@ class _QuartaProdutoState extends State<QuartaProduto> {
   Widget build(BuildContext context) {
     final produtoProvider = Provider.of<ProdutoCadastro>(context);
 
-    Future enviaFotos() async {
-      for (var foto in varios) {
-        String? url = await uploadFile(foto);
-        if (url != null) {
-          urls.add(url);
-        }
-      }
-      print(urls);
-
-      addProduct(Produto(
-        categorias: produtoProvider.cadastrando!['categorias'],
-        name: produtoProvider.cadastrando!['nome'],
-        marca: produtoProvider.cadastrando!['marca'],
-        genero: produtoProvider.cadastrando!['genero'],
-        cores: produtoProvider.cadastrando!['cores'],
-        peso: produtoProvider.cadastrando!['peso'],
-        dimensoes: produtoProvider.cadastrando!['dimensoes'],
-        description: produtoProvider.cadastrando!['descricao'],
-        estoque: produtoProvider.cadastrando!['estoque'],
-        price: produtoProvider.cadastrando!['price'],
-        imageURL: urls,
-        vendedorID: "FirebaseAuth.instance.currentUser!.uid",
-      ));
-    }
-
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +77,9 @@ class _QuartaProdutoState extends State<QuartaProduto> {
                 left: 15,
                 top: 15,
                 child: GestureDetector(
-                  onTap: () => produtoProvider.changeIndex(6),
+                  onTap: () {
+                    produtoProvider.changeIndex(3);
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -300,6 +256,9 @@ class _QuartaProdutoState extends State<QuartaProduto> {
                                           onDismissed: (direction) {
                                             setState(() {
                                               varios.removeAt(i);
+                                              produtoProvider
+                                                  .cadastrando!['files']
+                                                  .removeAt(i);
                                             });
                                           },
                                           child: Image.file(varios[i],
@@ -319,21 +278,23 @@ class _QuartaProdutoState extends State<QuartaProduto> {
                               onTap: () async {
                                 if (varios.length != 0) {
                                   try {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                            content:
-                                                CircularProgressIndicator()));
-                                    await enviaFotos().then((value) {
-                                      produtoProvider.clean();
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                              title:
-                                                  Text("Produto cadastrado!"),
-                                              content: Text(
-                                                  "Seu produto foi cadastrado e já deve estar sendo mostrado")));
-                                    });
+                                    Navigator.pop(context);
+                                    produtoProvider.changeIndex(5);
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) => AlertDialog(
+                                    //         content:
+                                    //             CircularProgressIndicator()));
+                                    // await enviaFotos().then((value) {});
+                                    // produtoProvider.clean();
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) => AlertDialog(
+                                    //         title:
+                                    //             Text("Produto cadastrado!"),
+                                    //         content: Text(
+                                    //             "Seu produto foi cadastrado e já deve estar sendo mostrado")));
+                                    // );
                                   } catch (error) {
                                     print(error);
                                   }
@@ -386,7 +347,6 @@ class RadiantGradientMask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final produtoProvider = Provider.of<ProdutoCadastro>(context);
     return ShaderMask(
       shaderCallback: (bounds) => RadialGradient(
         center: Alignment.center,

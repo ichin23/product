@@ -1,12 +1,9 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:product/services/firestore.dart';
+
 import 'package:product/services/produto.dart';
-import 'package:product/services/storage.dart';
-import '';
 
 class FormPage extends StatelessWidget {
   const FormPage({Key? key}) : super(key: key);

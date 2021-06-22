@@ -30,7 +30,8 @@ dependencies:
   path_provider: ^2.0.2
   image_picker: ^0.8.0+3
   cupertino_icons: ^1.0.2
-  carousel_slider: ^4.0.0-nullsafety.0
+  carousel_slider: ^4.0.0
+  flutter_card_swipper: ^0.4.0
   google_fonts: ^2.1.0
   provider: ^5.0.0
   flutter_circle_color_picker: ^0.3.0
