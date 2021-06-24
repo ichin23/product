@@ -22,32 +22,53 @@ class _EditPageState extends State<EditPage> {
   final tween = Tween<double>(begin: -200, end: 0);
 
   @override
-  Widget build(BuildContext context) {
-    final produtoProvider = Provider.of<ProdutoCadastro>(context);
+  void initState() {
+    super.initState();
+    categoria1.text = "";
+    categoria2.text = "";
+    categoria3.text = "";
+    categoria4.text = "";
+    categoria5.text = "";
+    final produtoProvider =
+        Provider.of<ProdutoCadastro>(context, listen: false);
     if (produtoProvider.cadastrando != null) {
       print(produtoProvider.cadastrando!.length);
       if (produtoProvider.cadastrando!.length != 0) {
-        for (int i = 0; i < produtoProvider.cadastrando!.length; i++) {
-          setState(() {
-            if (i == 0) {
-              categoria1.text = produtoProvider.cadastrando!['categorias'][0];
-            }
-            if (i == 1) {
-              categoria2.text = produtoProvider.cadastrando!['categorias'][0];
-            }
-            if (i == 2) {
-              categoria3.text = produtoProvider.cadastrando!['categorias'][0];
-            }
-            if (i == 3) {
-              categoria4.text = produtoProvider.cadastrando!['categorias'][0];
-            }
-            if (i == 3) {
-              categoria5.text = produtoProvider.cadastrando!['categorias'][0];
-            }
-          });
-        }
+        setState(() {
+          try {
+            categoria1.text = produtoProvider.cadastrando!['categorias'][0];
+          } catch (e) {
+            print(e);
+          }
+          try {
+            categoria2.text = produtoProvider.cadastrando!['categorias'][1];
+          } catch (e) {
+            print(e);
+          }
+          try {
+            categoria3.text = produtoProvider.cadastrando!['categorias'][2];
+          } catch (e) {
+            print(e);
+          }
+          try {
+            categoria4.text = produtoProvider.cadastrando!['categorias'][3];
+          } catch (e) {
+            print(e);
+          }
+          try {
+            categoria5.text = produtoProvider.cadastrando!['categorias'][4];
+          } catch (e) {
+            print(e);
+          }
+        });
       }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final produtoProvider = Provider.of<ProdutoCadastro>(context);
+
     // return Material(
     //   child: Scaffold(
     //     appBar: AppBar(
@@ -261,7 +282,13 @@ class _EditPageState extends State<EditPage> {
                 Container(
                   width: MediaQuery.of(context).size.width - 80,
                   height: 60,
-                  child: RaisedButton(
+                  child: OutlinedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)))),
                     onPressed: () {
                       List<String> categorias = [];
                       Map<String, dynamic> produto = {};
@@ -292,14 +319,11 @@ class _EditPageState extends State<EditPage> {
                       }
                       print(produtoProvider.cadastrando);
                     },
-                    color: const Color(0XFF0D0D0D),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
                     child: Text("Avançar",
                         style: TextStyle(
                           // fontWeight: FontWeight.bold,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: "Arial",
+                          fontWeight: FontWeight.w500,
+
                           foreground: Paint()
                             ..shader = LinearGradient(
                               colors: <Color>[

@@ -1,13 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:product/screens/form.dart';
 import 'package:product/screens/primeiraProduto.dart';
 import 'package:product/screens/produtoTeste.dart';
-
 import 'package:product/screens/review.dart';
-import 'package:product/screens/slider.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:product/services/firestore.dart';
 import 'package:product/services/produto.dart';
@@ -31,7 +28,7 @@ void main() async {
           '/produtoTeste': (context) => ProdutoPage(),
         },
         theme: ThemeData(
-          textTheme: GoogleFonts.bubblerOneTextTheme(),
+          textTheme: GoogleFonts.dmSansTextTheme(),
           accentColor: Color(0xffF27127),
           backgroundColor: Color(0xffF27127),
           primaryColor: Color(0xffF27127),
@@ -168,6 +165,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final produtoProvider = Provider.of<ProdutoCadastro>(context);
     final double size = MediaQuery.of(context).size.width * 0.3;
 
     return FutureBuilder<List<Produto>?>(
@@ -273,7 +271,12 @@ class _HomePageState extends State<HomePage> {
                                               BorderRadius.circular(15),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print(products[i].productID);
+                                              produtoProvider
+                                                  .addProduct(products[i]);
+                                              Navigator.of(context)
+                                                  .pushNamed('/produtoTeste');
+                                              print(
+                                                  produtoProvider.cadastrando);
                                             },
                                             child: GridTile(
                                                 header: Container(
@@ -294,13 +297,15 @@ class _HomePageState extends State<HomePage> {
                                                       .name
                                                       .toString()),
                                                   leading: IconButton(
-                                                    icon: Icon(Icons.edit),
-                                                    onPressed: () =>
-                                                        Navigator.pushNamed(
-                                                            context, '/form',
-                                                            arguments:
-                                                                products[i]),
-                                                  ),
+                                                      icon: Icon(Icons.edit),
+                                                      onPressed: () {
+                                                        print(products[i]
+                                                            .categorias);
+                                                        // Navigator.pushNamed(
+                                                        //     context, '/form',
+                                                        //     arguments:
+                                                        //         products[i]),
+                                                      }),
                                                 )),
                                           ),
                                         )),

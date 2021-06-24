@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'produto.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -47,6 +49,13 @@ Future<List<Produto>?> getProdutos() async {
         price: data['price'],
         description: data['description'],
         vendedorID: data['vendedorID'],
+        cores: data['cores'].values.toList().map((e) {
+          String corHex =
+              e.toString().replaceAll("Color(", '').replaceAll(")", '');
+          int codigo = int.parse(corHex);
+          print(Color(codigo));
+          return Color(codigo);
+        }).toList(),
         imageURL: data['imageURL'].map((e) => e as String).toList(),
         genero: data['genero'],
         marca: data['marca'],
@@ -54,7 +63,7 @@ Future<List<Produto>?> getProdutos() async {
         estoque: data['estoque'],
         peso: data['peso']));
   }
-  print(produto);
+  print(produto.toString());
   return produto;
 }
 
@@ -65,4 +74,24 @@ Future<Produto?> searchProduto(String ref) async {
 
   print(data);
   // getProduto(nome: data['nome'], description: description, vendedorID: vendedorID, productID: produto.id, price: price, imageURL: imageURL)
+}
+
+//Storage
+FirebaseStorage storage = FirebaseStorage.instance;
+
+Future<String?> uploadFile(File _image) async {
+  String name = _image.path.split("/").last;
+  String user = '1234';
+  Reference storageReference =
+      FirebaseStorage.instance.ref().child('images/$user/$name');
+  UploadTask uploadTask = storageReference.putFile(_image);
+  String? url;
+  await uploadTask.whenComplete(() async {
+    print('File Uploaded');
+
+    await storageReference.getDownloadURL().then((fileURL) {
+      url = fileURL;
+    });
+  });
+  return url;
 }

@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
-import 'package:product/services/firestore.dart';
-import 'package:product/services/produto.dart';
-import 'package:product/services/storage.dart';
 import 'package:provider/provider.dart';
 
 class QuartaProduto extends StatefulWidget {
@@ -54,8 +50,8 @@ class _QuartaProdutoState extends State<QuartaProduto> {
       if (produtoProvider.cadastrando!.containsKey('files')) {
         varios = produtoProvider.cadastrando!['files'];
       }
-      if (produtoProvider.cadastrando!.containsKey('urls')) {
-        urls = produtoProvider.cadastrando!['urls'];
+      if (produtoProvider.cadastrando!.containsKey('urlsImages')) {
+        urls = produtoProvider.cadastrando!['urlsImages'];
       }
     }
   }

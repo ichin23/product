@@ -23,7 +23,7 @@ class ProdutoCadastro extends ChangeNotifier {
     double peso,
     List<double> dimensoes,
     String? marca,
-    Map<String, Color>? cores,
+    List<dynamic>? cores,
     List<dynamic> categorias,
   ) {
     produtoCadastrando = Produto(
@@ -55,12 +55,26 @@ class ProdutoCadastro extends ChangeNotifier {
   }
 
   void addProduct(Produto newproduct) {
-    produtoCadastrando = newproduct;
+    cadastrando = {
+      'categorias': newproduct.categorias,
+      'nome': newproduct.name,
+      'price': newproduct.price,
+      'descricao': newproduct.description,
+      'peso': newproduct.peso,
+      'dimensoes': newproduct.dimensoes,
+      'estoque': newproduct.estoque,
+      'coresList': newproduct.cores,
+      'genero': newproduct.genero,
+      'marca': newproduct.marca,
+      'vendedorID': "FirebaseAuth.instance.currentUser!.uid",
+      'urlsImages': newproduct.imageURL,
+    };
+    notifyListeners();
   }
 
   void clear() {
-    produtoCadastrando = null;
-
+    cadastrando = null;
+    indexCadastro = 0;
     notifyListeners();
   }
 }

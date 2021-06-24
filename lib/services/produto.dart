@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Produto {
   final String name;
   final double price;
@@ -12,7 +10,7 @@ class Produto {
   final double peso;
   final List<dynamic> dimensoes;
   final int estoque;
-  final Map<String, Color>? cores;
+  final List<dynamic>? cores;
   final List<dynamic> categorias;
 
   Produto({

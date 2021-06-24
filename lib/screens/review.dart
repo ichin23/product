@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:product/services/firestore.dart';
-import 'package:product/services/produto.dart';
-import 'package:product/services/storage.dart';
 import 'package:provider/provider.dart';
 
 class ReviewPage extends StatefulWidget {

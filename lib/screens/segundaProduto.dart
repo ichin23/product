@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:product/screens/components/customField.dart';
-
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +54,27 @@ class _SegundaProdutoState extends State<SegundaProduto> {
         }
         if (produtoProvider.cadastrando!['cores'].containsKey('quarta')) {
           currentColor4 = produtoProvider.cadastrando!['cores']['quarta'];
+        }
+      } else if (produtoProvider.cadastrando!.containsKey('coresList')) {
+        try {
+          currentColor = produtoProvider.cadastrando!['coresList'][0];
+        } catch (e) {
+          print(e);
+        }
+        try {
+          currentColor2 = produtoProvider.cadastrando!['coresList'][1];
+        } catch (e) {
+          print(e);
+        }
+        try {
+          currentColor3 = produtoProvider.cadastrando!['coresList'][3];
+        } catch (e) {
+          print(e);
+        }
+        try {
+          currentColor4 = produtoProvider.cadastrando!['coresList'][4];
+        } catch (e) {
+          print(e);
         }
       }
       // for (int i = 0; i < produtoProvider.cadastrando['cores'].length; i++) {
