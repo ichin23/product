@@ -101,18 +101,6 @@ class _QuartaProdutoState extends State<QuartaProduto> {
                     ),
                   )),
               Positioned(
-                  top: 15,
-                  left: 15,
-                  child: GestureDetector(
-                    onTap: () => produtoProvider.changeIndex(2),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.black, width: 3)),
-                      child: Icon(Icons.arrow_back, size: 40),
-                    ),
-                  )),
-              Positioned(
                 top: 20,
                 right: 30,
                 child: Container(

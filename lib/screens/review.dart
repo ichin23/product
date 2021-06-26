@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:product/services/cadastroProdutoProvidere.dart';
 import 'package:product/services/firestore.dart';
@@ -13,7 +14,9 @@ class ReviewPage extends StatefulWidget {
 
 class _ReviewPageState extends State<ReviewPage> {
   PageController _pageController = PageController();
+  PageController _fotosController = PageController();
   int _currentPage = 0;
+  int _fotosPage = 0;
   @override
   void initState() {
     super.initState();
@@ -22,6 +25,14 @@ class _ReviewPageState extends State<ReviewPage> {
       if (next != _currentPage) {
         setState(() {
           _currentPage = next;
+        });
+      }
+    });
+    _fotosController.addListener(() {
+      int next = _fotosController.page!.round();
+      if (next != _fotosPage) {
+        setState(() {
+          _fotosPage = next;
         });
       }
     });
@@ -124,23 +135,37 @@ class _ReviewPageState extends State<ReviewPage> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFF2E8C9),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black54,
+                                      blurRadius: 2,
+                                      offset: Offset(2.5, 5))
+                                ],
+                              ),
                               alignment: Alignment.center,
                               height: 200,
                               width: 200,
-                              child: PageView.builder(
-                                itemCount: imageFiles.length,
-                                itemBuilder: (context, i) => Container(
+                              child: Stack(children: [
+                                Positioned(
+                                    top: 15,
+                                    left: 25,
+                                    child: Text(
+                                        "${_fotosPage + 1}/${imageFiles.length}")),
+                                Container(
                                   alignment: Alignment.center,
-                                  child: Stack(children: [
-                                    Image.file(imageFiles[i],
-                                        fit: BoxFit.cover),
-                                    // Positioned(
-                                    //     top: 15,
-                                    //     left: 15,
-                                    //     child: Text("${i + 1}/${imageFiles.length}"))
-                                  ]),
+                                  child: PageView.builder(
+                                    controller: _fotosController,
+                                    itemCount: imageFiles.length,
+                                    itemBuilder: (context, i) => Container(
+                                      alignment: Alignment.center,
+                                      child: Image.file(imageFiles[i],
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
                                 ),
-                              )),
+                              ])),
                         ),
                         PageView(
                           children: [
@@ -158,6 +183,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(40),
                                     child: Container(
+                                      padding: EdgeInsets.all(10),
                                       child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -192,11 +218,37 @@ class _ReviewPageState extends State<ReviewPage> {
                                               ],
                                             ),
                                             Text(
-                                                "Marca: ${produtoReview['marca']}"),
+                                              "Marca: ${produtoReview['marca']}",
+                                              style: TextStyle(fontSize: 15),
+                                            ),
                                             Text(
-                                                "Peso: ${produtoReview['peso']}"),
+                                              "Peso: ${produtoReview['peso']}",
+                                              style: TextStyle(fontSize: 15),
+                                            ),
+                                            SizedBox(height: 5),
                                             Text(
-                                                "Dimensões: ${produtoReview['dimensoes']}")
+                                              "Dimensões: ",
+                                              style: TextStyle(fontSize: 15),
+                                            ),
+                                            Container(
+                                              width: 200,
+                                              height: 70,
+                                              margin: EdgeInsets.only(left: 15),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      "Comprimento: ${produtoReview['dimensoes'][0]}cm "),
+                                                  Text(
+                                                      "Largura: ${produtoReview['dimensoes'][1]}cm "),
+                                                  Text(
+                                                      "Altura:  ${produtoReview['dimensoes'][2]}cm "),
+                                                ],
+                                              ),
+                                            )
                                           ]),
                                     ),
                                   ),
@@ -216,11 +268,12 @@ class _ReviewPageState extends State<ReviewPage> {
                                       children: [
                                         Text("Descrição: ",
                                             style: TextStyle(
-                                                fontSize: 30,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.w700)),
                                         SingleChildScrollView(
                                           child: Text(
                                               produtoReview['descricao'],
+                                              style: TextStyle(fontSize: 15),
                                               textAlign: TextAlign.start),
                                         ),
                                       ])),
@@ -288,9 +341,10 @@ class _ReviewPageState extends State<ReviewPage> {
                       children: [
                         Container(
                             child: TextButton(
-                                child: Text("Detalhes",
+                                child: AutoSizeText("Detalhes",
+                                    minFontSize: 15,
+                                    maxLines: 1,
                                     style: TextStyle(
-                                        fontSize: 20,
                                         color: Colors.black,
                                         decorationColor:
                                             Theme.of(context).accentColor,
@@ -306,9 +360,10 @@ class _ReviewPageState extends State<ReviewPage> {
                                 })),
                         Container(
                             child: TextButton(
-                                child: Text("Mais Informações",
+                                child: AutoSizeText("Mais Informações",
+                                    minFontSize: 15,
+                                    maxLines: 1,
                                     style: TextStyle(
-                                        fontSize: 20,
                                         color: Colors.black,
                                         decorationColor:
                                             Theme.of(context).accentColor,
@@ -342,11 +397,26 @@ class _ReviewPageState extends State<ReviewPage> {
             onPressed: () {
               enviaFotos().then((value) {
                 produtoProvider.clear();
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                            title: Text("Produto Cadastrado"),
+                            content: Text("Produto cadastrado com sucesso"),
+                            actions: [
+                              TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ]));
+                //AlertDialog()
               });
             },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 30),
-              child: Text("Avançar",
+              child: Text("Postar",
                   style: TextStyle(
                     // fontWeight: FontWeight.bold,
                     fontWeight: FontWeight.w900,

@@ -77,20 +77,6 @@ class _SegundaProdutoState extends State<SegundaProduto> {
           print(e);
         }
       }
-      // for (int i = 0; i < produtoProvider.cadastrando['cores'].length; i++) {
-      //   if (i == 0) {
-      //     currentColor = produtoProvider.cadastrando['cores'][i];
-      //   }
-      //   if (i == 1) {
-      //     currentColor2 = produtoProvider.cadastrando['cores'][i];
-      //   }
-      //   if (i == 2) {
-      //     currentColor3 = produtoProvider.cadastrando['cores'][i];
-      //   }
-      //   if (i == 3) {
-      //     currentColor4 = produtoProvider.cadastrando['cores'][i];
-      //   }
-      // }
     }
   }
 
@@ -149,7 +135,14 @@ class _SegundaProdutoState extends State<SegundaProduto> {
                 SizedBox(height: 5),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 40),
-                  child: CustomField(maxLines: 1, controller: marca),
+                  child: CustomField(
+                      maxLines: 1,
+                      controller: marca,
+                      validator: (value) {
+                        if (value == null) {
+                          genero.text = "";
+                        }
+                      }),
                 ),
               ]),
               SizedBox(height: 15),
@@ -170,9 +163,6 @@ class _SegundaProdutoState extends State<SegundaProduto> {
                     validator: (value) {
                       if (value == null) {
                         genero.text = "";
-                      }
-                      if (value!.trim() == "") {
-                        return "Digite um nome";
                       }
                     },
                   ),

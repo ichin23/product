@@ -30,9 +30,11 @@ class _ProdutoPageState extends State<ProdutoPage> {
     return Consumer<ProdutoCadastro>(
       builder: (context, produtoProvider, _) => Scaffold(
           backgroundColor: (produtoProvider.indexCadastro == 5)
-                    ?Color(0xFFF2F2F2):Color(0xffF27127),
+              ? Color(0xFFF2F2F2)
+              : Color(0xffF27127),
           appBar: AppBar(
             toolbarHeight: 120,
+            elevation: 10,
             backgroundColor: const Color(0XFF0D0D0D),
             title: AutoSizeText(
                 (produtoProvider.indexCadastro == 5)

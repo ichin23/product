@@ -21,10 +21,11 @@ class _PrecoPageState extends State<PrecoPage> {
         Provider.of<ProdutoCadastro>(context, listen: false);
     if (produtoProvider.cadastrando != null) {
       if (produtoProvider.cadastrando!.containsKey('price')) {
-        price.text = produtoProvider.cadastrando!['price'].toString();
+        price.text = produtoProvider.cadastrando!['price'].toStringAsFixed(2);
       }
       if (produtoProvider.cadastrando!.containsKey('estoque')) {
-        estoque.text = produtoProvider.cadastrando!['estoque'].toString();
+        estoque.text =
+            produtoProvider.cadastrando!['estoque'].toStringAsFixed(2);
       }
     }
   }
@@ -62,7 +63,6 @@ class _PrecoPageState extends State<PrecoPage> {
               child: CustomField(
                 prefixLabel: "R\$",
                 label: ' Price ',
-                
                 controller: price,
                 maxLines: 1,
                 textType: TextInputType.number,
@@ -77,7 +77,6 @@ class _PrecoPageState extends State<PrecoPage> {
               child: CustomField(
                 label: ' Estoque ',
                 sufixLabel: 'unidades',
-                
                 controller: estoque,
                 maxLines: 1,
                 textType: TextInputType.number,

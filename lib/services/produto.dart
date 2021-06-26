@@ -5,7 +5,7 @@ class Produto {
   final String? productID;
   final String vendedorID;
   final List<dynamic> imageURL;
-  final String genero;
+  final String? genero;
   final String? marca;
   final double peso;
   final List<dynamic> dimensoes;
@@ -35,7 +35,7 @@ Produto getProduto(
     required String description,
     required vendedorID,
     productID,
-    required genero,
+     genero,
     required int estoque,
     required List<double> dimensoes,
     required double peso,

@@ -76,6 +76,10 @@ Future<Produto?> searchProduto(String ref) async {
   // getProduto(nome: data['nome'], description: description, vendedorID: vendedorID, productID: produto.id, price: price, imageURL: imageURL)
 }
 
+Future<void> delete(String id) async {
+  produtos.doc(id).delete();
+}
+
 //Storage
 FirebaseStorage storage = FirebaseStorage.instance;
 
