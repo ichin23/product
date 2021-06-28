@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:product/screens/form.dart';
+import 'package:product/screens/insereFoto.dart';
 import 'package:product/screens/primeiraProduto.dart';
 import 'package:product/screens/produtoTeste.dart';
 import 'package:product/screens/review.dart';
@@ -26,6 +28,7 @@ void main() async {
           '/hero': (context) => HeroAnimation(),
           '/review': (context) => ReviewPage(),
           '/produtoTeste': (context) => ProdutoPage(),
+          '/insereFoto': (context) => InsereFoto(),
         },
         theme: ThemeData(
           textTheme: GoogleFonts.dmSansTextTheme(),
@@ -99,8 +102,8 @@ class _TelaTestState extends State<TelaTest> {
               child: Column(children: [
             selected
                 ? Container(
-                    padding: EdgeInsets.all(15),
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    height: MediaQuery.of(context).size.height * 0.8,
                     child: Column(children: [
                       SizedBox(height: 10),
                       Row(
@@ -127,10 +130,8 @@ class _TelaTestState extends State<TelaTest> {
                           leading: RadiantGradientMask(
                               child: Icon(Icons.store,
                                   color: Colors.white, size: 35)),
-                          trailing: RadiantGradientMask(
-                            child: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.white),
-                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 10),
                         ListTile(
@@ -144,10 +145,8 @@ class _TelaTestState extends State<TelaTest> {
                           leading: RadiantGradientMask(
                               child: Icon(Icons.person_outline,
                                   color: Colors.white, size: 35)),
-                          trailing: RadiantGradientMask(
-                            child: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.white),
-                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 10),
                         ListTile(
@@ -161,10 +160,8 @@ class _TelaTestState extends State<TelaTest> {
                           leading: RadiantGradientMask(
                               child: Icon(Icons.notifications_outlined,
                                   color: Colors.white, size: 35)),
-                          trailing: RadiantGradientMask(
-                            child: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.white),
-                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 10),
                         Container(
@@ -184,10 +181,8 @@ class _TelaTestState extends State<TelaTest> {
                           leading: RadiantGradientMask(
                               child: Icon(Icons.star_border,
                                   color: Colors.white, size: 35)),
-                          trailing: RadiantGradientMask(
-                            child: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.white),
-                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 10),
                         ListTile(
@@ -201,10 +196,22 @@ class _TelaTestState extends State<TelaTest> {
                           leading: RadiantGradientMask(
                               child: Icon(Icons.error_outline,
                                   color: Colors.white, size: 35)),
-                          trailing: RadiantGradientMask(
-                            child: Icon(Icons.keyboard_arrow_right,
-                                color: Colors.white),
-                          ),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
+                        ),
+                        ListTile(
+                          onTap: () {},
+                          title: Text("Logout",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20)),
+                          subtitle: Text("Sair da conta neste dispositivo",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15)),
+                          leading: RadiantGradientMask(
+                              child: Icon(Icons.logout_outlined,
+                                  color: Colors.white, size: 35)),
+                          trailing: Icon(Icons.keyboard_arrow_right,
+                              color: Colors.white),
                         ),
                       ])),
                       Spacer(),
@@ -263,9 +270,18 @@ class _TelaTestState extends State<TelaTest> {
                             height: MediaQuery.of(context).size.width * 0.15,
                             width: MediaQuery.of(context).size.width * 0.15,
                             child: Container(
-                              margin: EdgeInsets.only(bottom: 5),
                               child: Image.network(
-                                  "https://firebasestorage.googleapis.com/v0/b/testeflutter-4d2cf.appspot.com/o/projeto%2Fperson.png?alt=media&token=a4fe7d35-ec8e-4f4e-a42d-bbc5b320678d"),
+                                (FirebaseAuth.instance.currentUser!.photoURL ==
+                                            null ||
+                                        FirebaseAuth.instance.currentUser!
+                                                .photoURL ==
+                                            "")
+                                    ? "https://firebasestorage.googleapis.com/v0/b/testeflutter-4d2cf.appspot.com/o/projeto%2Fperson.png?alt=media&token=a4fe7d35-ec8e-4f4e-a42d-bbc5b320678d"
+                                    : FirebaseAuth
+                                        .instance.currentUser!.photoURL!,
+                                fit: BoxFit.cover,
+                                height: MediaQuery.of(context).size.width * 0.2,
+                              ),
                             )),
                       ),
                     ),
@@ -314,6 +330,11 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TelaTest(),
+                TextButton(
+                    child: Text("Adicionar foto"),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/insereFoto');
+                    })
               ],
             ))),
   ];
@@ -349,7 +370,6 @@ class _MyAppState extends State<MyApp> {
                       selectedItemColor: Colors.black,
                       showUnselectedLabels: true,
                       iconSize: 24,
-                      enableFeedback: true,
                       type: BottomNavigationBarType.fixed,
                       elevation: 4,
                       currentIndex: index,
@@ -388,7 +408,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final produtoProvider = Provider.of<ProdutoCadastro>(context);
-    double size = MediaQuery.of(context).size.width * 0.3;
 
     return Stack(
       children: [
@@ -402,6 +421,17 @@ class _HomePageState extends State<HomePage> {
                   if (projectSnap.connectionState == ConnectionState.done) {
                     final products = projectSnap.data;
                     print(getProdutos());
+                    List categorias = [];
+                    if (products != null) {
+                      categorias = products.map((produto) {
+                        var categoria =
+                            produto.categorias.map((e) => e).toList();
+                        for (var item in categoria) {
+                          return item.toString();
+                        }
+                      }).toList();
+                    }
+
                     return (products != null)
                         ? Container(
                             height: MediaQuery.of(context).size.height -
@@ -410,10 +440,49 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               children: [
                                 Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: IconButton(
+                                      onPressed: () {
+                                        showMenu(
+                                            context: context,
+                                            position:
+                                                RelativeRect.fromLTRB(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        .5,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        .2,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        .5,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        .2),
+                                            items: [
+                                              PopupMenuItem(
+                                                child: TextButton(
+                                                    child: Text("Mostra"),
+                                                    onPressed: () {
+                                                      print(categorias
+                                                          // [0].runtimeType
+                                                          );
+                                                    }),
+                                              )
+                                            ]);
+                                      },
+                                      icon: Icon(Icons.menu_rounded)),
+                                ),
+                                Container(
                                   height: MediaQuery.of(context).size.height -
                                       MediaQuery.of(context).size.height *
                                           0.15 -
-                                      32,
+                                      82,
                                   child: GridView.builder(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 5),
